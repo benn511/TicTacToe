@@ -18,6 +18,7 @@ class ttt {
     this.player1 = "X";
     this.player2 = "O";
     this.currentPlayer = this.player1;
+    this.currPlayerBoard;
     this.numTurns = 1;
   }
 
@@ -85,11 +86,13 @@ class ttt {
     if (this.checkRows || this.checkCol || this.checkDiag) win = true;
     return win;
   }
+
+  get getTurns() {
+    return this.numTurns;
+  }
 }
 
-let game = new ttt();
-
-//Game ends when board is full or someone wins
+//Game ends when you're on the 10th turn or someone wins
 
 // console.log(`Test board wins on col: ${game.isColWin(game.boardX)}`);
 // console.log(`Test board wins on row: ${game.isRowWin(game.boardX)}`);
