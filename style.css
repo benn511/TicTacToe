@@ -49,8 +49,20 @@ body {
 }
 
 .game-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 200px;
   width: 200px;
   cursor: pointer;
   background: #14bdac;
+}
+
+.x::after {
+  content: "x";
+  font-size: 200px;
+}
+.o::after {
+  content: "o";
+  font-size: 200px;
 }
