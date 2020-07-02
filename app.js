@@ -3,6 +3,8 @@ magicSquare = [
   [3, 5, 7],
   [8, 1, 6],
 ];
+
+let game = new ttt();
 //Html elements
 const statusDiv = document.querySelector(".status");
 const resetDiv = document.querySelector(".reset");
@@ -12,23 +14,19 @@ const cellDivs = document.querySelectorAll(".game-cell");
 let gameIsLive = true;
 let xIsNext = true;
 
-//helper functions
-const updateBoards = (e) => {
-  //Backend function for magic square boards
-  const id = Number(e); //convert to number
-  console.log(typeof id);
-  //find my number in my 2d array
-  //update both blocks
-  //num turns++
-};
-
 //event handlers
 const handleReset = (e) => {
   console.log(e);
 };
 const handleCellClick = (e) => {
-  updateBoards(e.target.id);
+  //Backend update
+  //Work on this part now
+  const id = Number(e); //convert to number
+  game.updateGame(id);
+
+  // updateBoards(e.target.id);
   //frontend update
+  //Frontend done for now
   const classList = e.target.classList;
   if (classList[1] == "x" || classList[1] == "o") {
     return;

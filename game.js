@@ -15,8 +15,6 @@ class ttt {
       [0, 0, 0],
       [0, 0, 0],
     ];
-    this.player1 = "X";
-    this.player2 = "O";
     this.currentPlayer = this.player1;
     this.currPlayerBoard;
     this.numTurns = 1;
@@ -81,18 +79,62 @@ class ttt {
     }
   }
 
+  findCell(id) {
+    let r = -1;
+    let c = -1;
+    for (let row = 0; row < 3; row++) {
+      for (let col = 0; col < 3; col++) {
+        if (this.magicSquare[row][col] == id) {
+          r = row;
+          c = col;
+        }
+      }
+    }
+  }
+
   checkWin() {
     let win = false;
-    if (this.checkRows || this.checkCol || this.checkDiag) win = true;
+    if (this.isColWin() || this.isDiagWin() || this.isRowWin()) win = true;
     return win;
+  }
+
+  updateGame(id) {
+    //Update num of turns
+    this.numTurns++;
+    //find index of current id in 2d magic square
+    let r = -1;
+    let c = -1;
+    for (let row = 0; row < 3; row++) {
+      for (let col = 0; col < 3; col++) {
+        if (this.magicSquare[row][col] == id) {
+          r = row;
+          c = col;
+        }
+      }
+    }
+    //Update boards for both players
+    if (r != -1) {
+      console.log("Row and col: ", r, c);
+      console.log("ID: ", id);
+      if (xIsNext) {
+        game.boardX[r][c] = id;
+        game.boardY[r][c] = -1;
+      } else {
+        game.boardY[r][c] = id;
+        game.boardX[r][c] = -1;
+      }
+      //update num turns
+    } else {
+      console.log("Error finding row and col of id. Boards not updated!");
+    }
+
+    //Check for winner
   }
 
   get getTurns() {
     return this.numTurns;
   }
 }
-
-//Game ends when you're on the 10th turn or someone wins
 
 // console.log(`Test board wins on col: ${game.isColWin(game.boardX)}`);
 // console.log(`Test board wins on row: ${game.isRowWin(game.boardX)}`);
