@@ -4,39 +4,39 @@ magicSquare = [
   [8, 1, 6],
 ];
 
+//Create new game
 let game = new ttt();
+
 //Html elements
 const statusDiv = document.querySelector(".status");
 const resetDiv = document.querySelector(".reset");
 const cellDivs = document.querySelectorAll(".game-cell");
-
-//game var's
-let gameIsLive = true;
-let xIsNext = true;
 
 //event handlers
 const handleReset = (e) => {
   console.log(e);
 };
 const handleCellClick = (e) => {
-  //Backend update
-  //Work on this part now
-  const id = Number(e); //convert to number
-  game.updateGame(id);
+  if (game.gameIsLive) {
+    //Backend update
+    const id = Number(e.target.id); //convert to number
+    game.updateGame(id);
+    game.checkStatus();
 
-  // updateBoards(e.target.id);
-  //frontend update
-  //Frontend done for now
-  const classList = e.target.classList;
-  if (classList[1] == "x" || classList[1] == "o") {
-    return;
-  }
-  if (xIsNext) {
-    classList.add("x");
-    xIsNext = !xIsNext;
+    // updateBoards(e.target.id);
+    //frontend update
+    const classList = e.target.classList;
+    if (classList[1] == "x" || classList[1] == "o") {
+      return;
+    }
+    if (game.xIsNext) {
+      classList.add("x");
+    } else {
+      classList.add("o");
+    }
+    game.togglePlayer();
   } else {
-    classList.add("o");
-    xIsNext = !xIsNext;
+    console.log("Game over!!");
   }
 };
 

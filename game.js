@@ -15,9 +15,17 @@ class ttt {
       [0, 0, 0],
       [0, 0, 0],
     ];
-    this.currentPlayer = this.player1;
-    this.currPlayerBoard;
-    this.numTurns = 1;
+    this.gameIsLive = true;
+    this.xIsNext = true;
+    this.numTurns = 0;
+  }
+
+  checkStatus() {
+    console.log("Is x next: ", this.xIsNext);
+    console.log("Board x: ", this.boardX);
+    console.log("Board y: ", this.boardY);
+    console.log("Num turns: ", this.numTurns);
+    console.log("Game is live: ", this.gameIsLive);
   }
 
   resetGame() {
@@ -72,29 +80,22 @@ class ttt {
   }
 
   togglePlayer() {
-    if (this.currentPlayer === this.player1) {
-      this.currentPlayer = this.player2;
+    if (this.xIsNext) {
+      this.xIsNext = !this.xIsNext;
     } else {
-      this.currentPlayer = this.player1;
-    }
-  }
-
-  findCell(id) {
-    let r = -1;
-    let c = -1;
-    for (let row = 0; row < 3; row++) {
-      for (let col = 0; col < 3; col++) {
-        if (this.magicSquare[row][col] == id) {
-          r = row;
-          c = col;
-        }
-      }
+      this.xIsNext = !this.xIsNext;
     }
   }
 
   checkWin() {
+    let playerBoard = this.xIsNext ? this.boardX : this.boardY;
     let win = false;
-    if (this.isColWin() || this.isDiagWin() || this.isRowWin()) win = true;
+    if (
+      this.isColWin(playerBoard) ||
+      this.isDiagWin(playerBoard) ||
+      this.isRowWin(playerBoard)
+    )
+      win = true;
     return win;
   }
 
@@ -109,14 +110,15 @@ class ttt {
         if (this.magicSquare[row][col] == id) {
           r = row;
           c = col;
+        } else {
         }
       }
     }
     //Update boards for both players
     if (r != -1) {
-      console.log("Row and col: ", r, c);
-      console.log("ID: ", id);
-      if (xIsNext) {
+      console.log("Index of id: ", r, c);
+      console.log("ID passed: ", id);
+      if (this.xIsNext) {
         game.boardX[r][c] = id;
         game.boardY[r][c] = -1;
       } else {
@@ -126,16 +128,16 @@ class ttt {
       //update num turns
     } else {
       console.log("Error finding row and col of id. Boards not updated!");
+      console.log("Row and col: ", r, c);
     }
 
     //Check for winner
+    if (this.checkWin()) {
+      this.gameIsLive = false;
+    }
   }
 
   get getTurns() {
     return this.numTurns;
   }
 }
-
-// console.log(`Test board wins on col: ${game.isColWin(game.boardX)}`);
-// console.log(`Test board wins on row: ${game.isRowWin(game.boardX)}`);
-// console.log(`Test board wins on diag: ${game.isDiagWin(game.boardX)}`);
