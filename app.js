@@ -11,15 +11,23 @@ let game = new ttt();
 const statusDiv = document.querySelector(".status");
 const resetDiv = document.querySelector(".reset");
 const cellDivs = document.querySelectorAll(".game-cell");
+const winDiv = document.querySelector(".winner");
 
 //event handlers
 const handleReset = (e) => {
+  game.resetGame();
+  game.checkStatus();
   console.log(e);
+  //Reset frontend
+  for (const cellDiv of cellDivs) {
+    cellDiv.classList.remove("x");
+    cellDiv.classList.remove("o");
+  }
+  statusDiv.innerHTML = "X is next";
 };
 const handleCellClick = (e) => {
-  if (game.gameIsLive) {
-    //Backend update
-    const id = Number(e.target.id); //convert to number
+  if (game.gameIsLive && game.numTurns < 9) {
+    const id = Number(e.target.id);
     game.updateGame(id);
     game.checkStatus();
 
@@ -31,12 +39,28 @@ const handleCellClick = (e) => {
     }
     if (game.xIsNext) {
       classList.add("x");
+      statusDiv.innerHTML = "O is next";
     } else {
       classList.add("o");
+      statusDiv.innerHTML = "X is next";
+    }
+    //On game over display banner
+    if (!game.gameIsLive) {
+      //Display win message
+      if (game.checkWin(game.boardX)) {
+        winDiv.innerHTML = "X has won!";
+        console.log("X has won!");
+      } else if (game.checkWin(game.boardY)) {
+        console.log("O has won");
+      } else {
+        console.log("Game has ended in a tie!");
+      }
     }
     game.togglePlayer();
   } else {
-    console.log("Game over!!");
+    if (game.checkWin(game.boardX) || game.checkWin(game.boardY)) {
+      console.log("Game over: has been decided already!");
+    }
   }
 };
 

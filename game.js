@@ -18,6 +18,7 @@ class ttt {
     this.gameIsLive = true;
     this.xIsNext = true;
     this.numTurns = 0;
+    this.banner = document.querySelector(".winner");
   }
 
   checkStatus() {
@@ -39,8 +40,9 @@ class ttt {
       [0, 0, 0],
       [0, 0, 0],
     ];
-    this.currentPlayer = this.player1;
-    this.numTurns = 1;
+    this.xIsNext = true;
+    this.numTurns = 0;
+    this.gameIsLive = true;
   }
 
   isRowWin(playerBoard) {
@@ -87,8 +89,7 @@ class ttt {
     }
   }
 
-  checkWin() {
-    let playerBoard = this.xIsNext ? this.boardX : this.boardY;
+  checkWin(playerBoard) {
     let win = false;
     if (
       this.isColWin(playerBoard) ||
@@ -131,8 +132,12 @@ class ttt {
       console.log("Row and col: ", r, c);
     }
 
-    //Check for winner
-    if (this.checkWin()) {
+    //Check for winner or full board
+    if (
+      this.checkWin(this.boardX) ||
+      this.checkWin(this.boardY) ||
+      this.numTurns == 9
+    ) {
       this.gameIsLive = false;
     }
   }

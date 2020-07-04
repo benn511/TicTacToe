@@ -66,3 +66,9 @@ body {
   content: "o";
   font-size: 200px;
 }
+.winner {
+  font-size: 50px;
+  color: #f2ebd3;
+  /* justify-content: center; */
+  /* align-items: center; */
+}
