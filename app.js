@@ -48,11 +48,13 @@ const handleCellClick = (e) => {
     if (!game.gameIsLive) {
       //Display win message
       if (game.checkWin(game.boardX)) {
-        winDiv.innerHTML = "X has won!";
+        statusDiv.innerHTML = "X has won!";
         console.log("X has won!");
       } else if (game.checkWin(game.boardY)) {
+        statusDiv.innerHTML = "O has won!";
         console.log("O has won");
       } else {
+        statusDiv.innerHTML = "Game tie!";
         console.log("Game has ended in a tie!");
       }
     }
