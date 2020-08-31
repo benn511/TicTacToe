@@ -21,29 +21,17 @@ class ttt {
     this.status = document.querySelector(".status");
     this.banner = document.querySelector(".winner");
   }
-
-  checkStatus() {
-    console.log("Is x next: ", this.xIsNext);
-    console.log("Board x: ", this.boardX);
-    console.log("Board y: ", this.boardY);
-    console.log("Num turns: ", this.numTurns);
-    console.log("Game is live: ", this.gameIsLive);
-  }
-
-  resetGame() {
-    this.boardX = [
-      [0, 0, 0],
-      [0, 0, 0],
-      [0, 0, 0],
-    ];
-    this.boardY = [
-      [0, 0, 0],
-      [0, 0, 0],
-      [0, 0, 0],
-    ];
-    this.xIsNext = true;
-    this.numTurns = 0;
-    this.gameIsLive = true;
+  isLive() {
+    //Check for winner or full board
+    if (
+      this.checkWin(this.boardX) ||
+      this.checkWin(this.boardY) ||
+      this.numTurns == 9
+    ) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   isRowWin(playerBoard) {
@@ -101,49 +89,64 @@ class ttt {
     return win;
   }
 
-  updateGame(id) {
-    //Update num of turns
+  process(currTarget) {
+    let id = currTarget.id;
     this.numTurns++;
+    this.updateMagicSquares(id);
+
+    //update front end?
+  }
+
+  updateMagicSquares(id) {
+    let notFound = true;
     //find index of current id in 2d magic square
-    let r = -1;
-    let c = -1;
     for (let row = 0; row < 3; row++) {
       for (let col = 0; col < 3; col++) {
         if (this.magicSquare[row][col] == id) {
-          r = row;
-          c = col;
-        } else {
+          notFound = false;
+          if (this.xIsNext) {
+            game.boardX[r][c] = id;
+            game.boardY[r][c] = -1;
+          } else {
+            game.boardY[r][c] = id;
+            game.boardX[r][c] = -1;
+          }
         }
       }
     }
-    //Update boards for both players
-    if (r != -1) {
-      console.log("Index of id: ", r, c);
-      console.log("ID passed: ", id);
-      if (this.xIsNext) {
-        game.boardX[r][c] = id;
-        game.boardY[r][c] = -1;
-      } else {
-        game.boardY[r][c] = id;
-        game.boardX[r][c] = -1;
-      }
-      //update num turns
-    } else {
-      console.log("Error finding row and col of id. Boards not updated!");
-      console.log("Row and col: ", r, c);
-    }
 
-    //Check for winner or full board
-    if (
-      this.checkWin(this.boardX) ||
-      this.checkWin(this.boardY) ||
-      this.numTurns == 9
-    ) {
-      this.gameIsLive = false;
+    if (notFound) {
+      console.log(`Could not find id specified: ${id}`);
     }
   }
 
   get getTurns() {
     return this.numTurns;
+  }
+
+  resetGame() {
+    this.resetVars();
+  }
+
+  resetVars() {
+    this.boardX = [
+      [0, 0, 0],
+      [0, 0, 0],
+      [0, 0, 0],
+    ];
+    this.boardY = [
+      [0, 0, 0],
+      [0, 0, 0],
+      [0, 0, 0],
+    ];
+    this.xIsNext = true;
+    this.numTurns = 0;
+    this.gameIsLive = true;
+    status.innerHtml = "X is next";
+    //set inner html of each game cell to blank
+    //   for (const cellDiv of cellDivs) {
+    //     cellDiv.classList.remove("x");
+    //     cellDiv.classList.remove("o");
+    //   }
   }
 }

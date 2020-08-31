@@ -14,23 +14,10 @@ const cellDivs = document.querySelectorAll(".game-cell");
 const winDiv = document.querySelector(".winner");
 const container = document.querySelector(".container");
 
-//event handlers
-// const handleReset = (e) => {
-//   game.resetGame();
-//   game.checkStatus();
-//   console.log(e);
-//   //Reset frontend
-//   for (const cellDiv of cellDivs) {
-//     cellDiv.classList.remove("x");
-//     cellDiv.classList.remove("o");
-//   }
-//   statusDiv.innerHTML = "X is next";
-// };
 // const handleCellClick = (e) => {
 //   if (game.gameIsLive && game.numTurns < 9) {
 //     const id = Number(e.target.id);
 //     game.updateGame(id);
-//     game.checkStatus();
 
 //     // updateBoards(e.target.id);
 //     //frontend update
@@ -72,6 +59,11 @@ const handleClick = (e) => {
   console.log(e.target);
   if (currTarget.classList.contains("game-cell")) {
     console.log("Clicked on game cell");
+    if (game.isLive()) {
+      game.process(currTarget);
+    } else {
+      //Display game over message and winner
+    }
   } else if (currTarget.classList.contains("reset")) {
     console.log("Clicked on reset btn");
   }
