@@ -51,14 +51,13 @@ const handleClick = (e) => {
   let currTarget = e.target;
   console.log(e.target);
   if (currTarget.classList.contains("game-cell")) {
-    console.log("Clicked on game cell");
     if (game.isLive()) {
       game.process(currTarget);
     } else {
       //Display game over message or winner?
     }
   } else if (currTarget.classList.contains("reset")) {
-    console.log("Clicked on reset btn");
+    game.reset();
   }
 };
 

@@ -1,5 +1,6 @@
 class ttt {
   constructor() {
+    //Game variables
     this.magicSquare = [
       [4, 9, 2],
       [3, 5, 7],
@@ -15,10 +16,12 @@ class ttt {
       [0, 0, 0],
       [0, 0, 0],
     ];
-    this.gameIsLive = true;
     this.xIsNext = true;
     this.numTurns = 0;
-    this.status = document.querySelector(".status");
+    this.cellDivs = document.querySelectorAll(".game-cell");
+
+    //Selectors
+    this.status = document.querySelector("#status");
     this.banner = document.querySelector(".winner");
   }
   isLive() {
@@ -86,6 +89,14 @@ class ttt {
   }
 
   process(currTarget) {
+    if (
+      currTarget.classList.contains("x") ||
+      currTarget.classList.contains("o")
+    ) {
+      this.status.innerHTML = "Please choose a different square.";
+      console.log("Wrong square");
+      return;
+    }
     let id = currTarget.id;
     this.numTurns++;
     this.updateMagicSquares(id);
@@ -101,11 +112,11 @@ class ttt {
         if (this.magicSquare[row][col] == id) {
           notFound = false;
           if (this.xIsNext) {
-            game.boardX[r][c] = id;
-            game.boardY[r][c] = -1;
+            game.boardX[row][col] = id;
+            game.boardY[row][col] = -1;
           } else {
-            game.boardY[r][c] = id;
-            game.boardX[r][c] = -1;
+            game.boardY[row][col] = id;
+            game.boardX[row][col] = -1;
           }
         }
       }
@@ -130,11 +141,7 @@ class ttt {
     return this.numTurns;
   }
 
-  resetGame() {
-    this.resetVars();
-  }
-
-  resetVars() {
+  reset() {
     this.boardX = [
       [0, 0, 0],
       [0, 0, 0],
@@ -148,11 +155,11 @@ class ttt {
     this.xIsNext = true;
     this.numTurns = 0;
     this.gameIsLive = true;
-    status.innerHtml = "X is next";
-    //set inner html of each game cell to blank
-    //   for (const cellDiv of cellDivs) {
-    //     cellDiv.classList.remove("x");
-    //     cellDiv.classList.remove("o");
-    //   }
+    this.status.innerHTML = "X is next";
+    // set inner html of each game cell to blank
+    for (let cellDiv of this.cellDivs) {
+      cellDiv.classList.remove("x");
+      cellDiv.classList.remove("o");
+    }
   }
 }
