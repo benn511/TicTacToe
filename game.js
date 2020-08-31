@@ -92,9 +92,9 @@ class ttt {
   process(currTarget) {
     let id = currTarget.id;
     this.numTurns++;
-    this.updateMagicSquares(id);
 
-    //update front end?
+    this.updateMagicSquares(id);
+    this.updateFrontend(currTarget);
   }
 
   updateMagicSquares(id) {
@@ -117,6 +117,16 @@ class ttt {
 
     if (notFound) {
       console.log(`Could not find id specified: ${id}`);
+    }
+  }
+
+  updateFrontend(currTarget) {
+    if (this.xIsNext) {
+      currTarget.classList.add("x");
+      this.status.innerHTML = "O is next";
+    } else {
+      currTarget.classList.add("o");
+      this.status.innerHTML = "X is next";
     }
   }
 
