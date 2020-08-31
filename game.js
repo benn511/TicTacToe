@@ -71,11 +71,7 @@ class ttt {
   }
 
   togglePlayer() {
-    if (this.xIsNext) {
-      this.xIsNext = !this.xIsNext;
-    } else {
-      this.xIsNext = !this.xIsNext;
-    }
+    this.xIsNext = !this.xIsNext;
   }
 
   checkWin(playerBoard) {
@@ -92,9 +88,9 @@ class ttt {
   process(currTarget) {
     let id = currTarget.id;
     this.numTurns++;
-
     this.updateMagicSquares(id);
     this.updateFrontend(currTarget);
+    this.togglePlayer();
   }
 
   updateMagicSquares(id) {

@@ -15,7 +15,7 @@ const winDiv = document.querySelector(".winner");
 const container = document.querySelector(".container");
 
 // const handleCellClick = (e) => {
-//   if (game.gameIsLive && game.numTurns < 9) {
+//   if (game.isLive()) {
 //     const id = Number(e.target.id);
 //     game.updateGame(id);
 
@@ -24,13 +24,6 @@ const container = document.querySelector(".container");
 //     const classList = e.target.classList;
 //     if (classList[1] == "x" || classList[1] == "o") {
 //       return;
-//     }
-//     if (game.xIsNext) {
-//       classList.add("x");
-//       statusDiv.innerHTML = "O is next";
-//     } else {
-//       classList.add("o");
-//       statusDiv.innerHTML = "X is next";
 //     }
 //     //On game over display banner
 //     if (!game.gameIsLive) {
@@ -62,7 +55,7 @@ const handleClick = (e) => {
     if (game.isLive()) {
       game.process(currTarget);
     } else {
-      //Display game over message and winner
+      //Display game over message or winner?
     }
   } else if (currTarget.classList.contains("reset")) {
     console.log("Clicked on reset btn");
