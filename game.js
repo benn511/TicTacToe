@@ -16,6 +16,7 @@ class ttt {
       [0, 0, 0],
       [0, 0, 0],
     ];
+    this.winner = "none";
     this.xIsNext = true;
     this.numTurns = 0;
     this.cellDivs = document.querySelectorAll(".game-cell");
@@ -26,15 +27,15 @@ class ttt {
   }
   isLive() {
     //Check for winner or full board
-    if (
-      this.checkWin(this.boardX) ||
-      this.checkWin(this.boardY) ||
-      this.numTurns == 9
-    ) {
-      return false;
-    } else {
+    if (game.getTurns < 9 && game.winner == "none") {
       return true;
-    }
+    } else return false;
+  }
+
+  hasWinner() {
+    if (this.winner != "none") {
+      return true;
+    } else return false;
   }
 
   isRowWin(playerBoard) {
@@ -83,8 +84,9 @@ class ttt {
       this.isColWin(playerBoard) ||
       this.isDiagWin(playerBoard) ||
       this.isRowWin(playerBoard)
-    )
+    ) {
       win = true;
+    }
     return win;
   }
 
@@ -100,12 +102,22 @@ class ttt {
     let id = currTarget.id;
     this.numTurns++;
     this.updateMagicSquares(id);
+    if (this.xIsNext) {
+      if (this.checkWin(this.boardX)) {
+        this.winner = "X";
+      }
+    } else {
+      if (this.checkWin(this.boardY)) {
+        this.winner = "Y";
+      }
+    }
     this.updateFrontend(currTarget);
     this.togglePlayer();
   }
 
   updateMagicSquares(id) {
     let notFound = true;
+    id = parseInt(id);
     //find index of current id in 2d magic square
     for (let row = 0; row < 3; row++) {
       for (let col = 0; col < 3; col++) {
@@ -137,8 +149,16 @@ class ttt {
     }
   }
 
+  dispWinner(winner) {
+    this.status.innerHTML = `${winner} has won!`;
+  }
+
   get getTurns() {
     return this.numTurns;
+  }
+
+  get getWinner() {
+    return this.winner;
   }
 
   reset() {
@@ -155,6 +175,7 @@ class ttt {
     this.xIsNext = true;
     this.numTurns = 0;
     this.gameIsLive = true;
+    this.winner = "none";
     this.status.innerHTML = "X is next";
     // set inner html of each game cell to blank
     for (let cellDiv of this.cellDivs) {
