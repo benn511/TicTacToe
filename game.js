@@ -18,6 +18,7 @@ class ttt {
     this.gameIsLive = true;
     this.xIsNext = true;
     this.numTurns = 0;
+    this.status = document.querySelector(".status");
     this.banner = document.querySelector(".winner");
   }
 
