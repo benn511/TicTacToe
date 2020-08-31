@@ -68,14 +68,13 @@ const container = document.querySelector(".container");
 // };
 
 const handleClick = (e) => {
+  let currTarget = e.target;
   console.log(e.target);
+  if (currTarget.classList.contains("game-cell")) {
+    console.log("Clicked on game cell");
+  } else if (currTarget.classList.contains("reset")) {
+    console.log("Clicked on reset btn");
+  }
 };
 
 container.addEventListener("click", handleClick);
-
-// //event listeners
-// resetDiv.addEventListener("click", handleReset);
-
-// for (const cellDiv of cellDivs) {
-//   cellDiv.addEventListener("click", handleCellClick);
-// }
