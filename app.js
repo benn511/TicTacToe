@@ -1,18 +1,4 @@
-magicSquare = [
-  [4, 9, 2],
-  [3, 5, 7],
-  [8, 1, 6],
-];
-
-//Create new game
 let game = new ttt();
-
-//Html elements
-const statusDiv = document.querySelector(".status");
-const resetDiv = document.querySelector(".reset");
-const cellDivs = document.querySelectorAll(".game-cell");
-const winDiv = document.querySelector(".winner");
-const container = document.querySelector(".container");
 
 const handleClick = (e) => {
   let currTarget = e.target;
@@ -21,11 +7,9 @@ const handleClick = (e) => {
     if (game.isLive()) {
       game.process(currTarget);
       if (game.hasWinner()) {
-        console.log("Found winner");
         game.dispWinner(game.getWinner);
       }
     } else {
-      console.log("Game over!");
       game.dispWinner("Game over! " + game.getWinner);
     }
   } else if (currTarget.classList.contains("reset")) {
@@ -33,4 +17,6 @@ const handleClick = (e) => {
   }
 };
 
+//Add event handler to container
+const container = document.querySelector(".container");
 container.addEventListener("click", handleClick);
